@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+  front:
+    build:
+      context: ./front
+      dockerfile: docker/Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - back
+  back:
+    restart: unless-stopped
+    build:
+      context: ./back
+      dockerfile: docker/Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mariadb
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: back
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - mariadb-data:/var/lib/mysql/data
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 3s
+      timeout: 15s
+volumes:
+  mariadb-data: {}
