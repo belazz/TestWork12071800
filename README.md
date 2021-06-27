@@ -5,7 +5,7 @@
 ```
 git clone 
 rename back/.env.example to back/.env
-rename front/.env.local.example to front/.env.local
+rename front/.env.example to front/.env.local
 docker-compose up
 navigate to localhost:80
 ```
