@@ -1,6 +1,6 @@
 # TestWork12071800
-
-## Running locally
+## Sample Laravel+Vue.js SPA CRUD App
+### Running locally
 
 ```
 git clone 
